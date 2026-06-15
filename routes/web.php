@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\FnbMenuController;
 use App\Http\Controllers\Admin\FnbOrderController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\BookingController as PublicBookingController;
+
 
 // ── Halaman Publik ──
 Route::get('/', function () {
@@ -19,7 +22,7 @@ Route::get('/', function () {
 // require __DIR__.'/auth.php';
 
 // Auth belajar manual
-Route::middleware('guest')->group(function(){
+Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 });
@@ -28,6 +31,14 @@ Route::middleware('guest')->group(function(){
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
+
+// Halaman Publik
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/kamar', [HomeController::class, 'rooms'])->name('rooms');
+Route::get('/kamar/{room}/pesan', [PublicBookingController::class, 'create'])->name('booking.create');
+Route::post('/kamar/{room}/pesan', [PublicBookingController::class, 'store'])->name('booking.store');
+Route::get('/booking/sukses/{booking}', [PublicBookingController::class, 'success'])->name('booking.success');
+
 
 // ── Admin Panel ──
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
