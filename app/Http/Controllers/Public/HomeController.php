@@ -24,12 +24,12 @@ class HomeController extends Controller
     // Halaman daftar kamar
     public function rooms()
     {
-        $rooms = Room::with('roomType')
+        $rooms       = Room::with('roomType')
             ->where('status', 'available')
             ->get()
             ->groupBy('room_type_id');
 
-        $roomTypes_model = RoomType::all()->keyBy('id');
+        $roomTypes_model   = RoomType::all()->keyBy('id'); // ← nama konsisten: $roomTypes
 
         return view('public.rooms', compact('rooms', 'roomTypes_model'));
     }

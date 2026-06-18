@@ -47,7 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // ── Superadmin + Admin Hotel ──
-    Route::middleware('role:superadmin,admin_hotel')->group(function () {
+    Route::middleware('role:superadmin,resepsionis')->group(function () {
 
         // Kamar
         Route::resource('rooms', RoomController::class);
@@ -56,6 +56,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::resource('bookings', BookingController::class)->except('edit', 'update');
         Route::patch('bookings/{booking}/status', [BookingController::class, 'updateStatus'])
             ->name('bookings.updateStatus');
+
+        Route::post('bookings/{booking}/add-fnb', [BookingController::class, 'addFnb'])
+            ->name('bookings.addFnb');
+        Route::get('bookings/{booking}/invoice', [BookingController::class, 'invoice'])
+            ->name('bookings.invoice');
 
         // Ulasan
         Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');

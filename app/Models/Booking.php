@@ -10,18 +10,40 @@ class Booking extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'booking_code', 'room_id', 'guest_name', 'guest_email',
-        'guest_phone', 'check_in', 'check_out', 'total_nights',
-        'total_price', 'status', 'handled_by', 'notes',
+        'booking_code',
+        'room_id',
+        'guest_name',
+        'guest_email',
+        'guest_phone',
+        'check_in',
+        'check_out',
+        'total_nights',
+        'total_price',
+        'status',
+        'payment_status',
+        'paid_at',
+        'handled_by',
+        'notes',
     ];
 
     protected function casts(): array
     {
         return [
-            'check_in'    => 'date',
-            'check_out'   => 'date',
-            'total_price' => 'decimal:2',
+            'check_in'       => 'date',
+            'check_out'      => 'date',
+            'total_price'    => 'decimal:2',
+            'paid_at'        => 'datetime',
         ];
+    }
+
+    // Hitung total termasuk F&B
+    public function grandTotal(): float
+    {
+        $fnbTotal = $this->fnbOrders
+            ->whereNotIn('status', ['cancelled'])
+            ->sum('total_price');
+
+        return (float) $this->total_price + (float) $fnbTotal;
     }
 
     public function room()

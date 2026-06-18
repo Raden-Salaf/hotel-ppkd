@@ -40,7 +40,7 @@
             </div>
         @endif
 
-        @foreach($roomTypes as $typeId => $roomsInType)
+        @foreach($rooms as $typeId => $roomsInType)
             @php $type = $roomTypes_model[$typeId] ?? null; @endphp
             <div class="mb-12">
                 <div class="flex items-center gap-4 mb-5">

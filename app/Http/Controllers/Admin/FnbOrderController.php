@@ -22,9 +22,9 @@ class FnbOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'room_number' => 'required|string',
-            'booking_id'  => 'nullable|exists:bookings,id',
-            'items'       => 'required|array|min:1',
+            'room_number'         => 'required|string',
+            'booking_id'          => 'nullable|exists:bookings,id',
+            'items'               => 'required|array|min:1',
             'items.*.fnb_menu_id' => 'required|exists:fnb_menus,id',
             'items.*.quantity'    => 'required|integer|min:1',
             'items.*.notes'       => 'nullable|string',
@@ -49,7 +49,7 @@ class FnbOrderController extends Controller
 
         $order = FnbOrder::create([
             'order_code'  => FnbOrder::generateCode(),
-            'booking_id'  => $request->booking_id,
+            'booking_id'  => $request->booking_id, // null = standalone
             'room_number' => $request->room_number,
             'total_price' => $totalPrice,
             'status'      => 'queue',

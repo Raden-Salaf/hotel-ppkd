@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             ['email' => 'super@hotel.com'],
             [
                 'name'      => 'Super Admin',
-                'password'  => 'password123', // auto-hash via cast 'hashed'
+                'password'  => 'hotel123', // auto-hash via cast 'hashed'
                 'role_id'   => Role::where('slug', 'superadmin')->value('id'),
                 'is_active' => true,
             ]
@@ -23,11 +23,11 @@ class UserSeeder extends Seeder
 
         // Admin Hotel
         User::firstOrCreate(
-            ['email' => 'hotel@hotel.com'],
+            ['email' => 'admin@hotel.com'],
             [
                 'name'      => 'Admin Hotel',
-                'password'  => 'password123',
-                'role_id'   => Role::where('slug', 'admin_hotel')->value('id'),
+                'password'  => 'admin123',
+                'role_id'   => Role::where('slug', 'resepsionis')->value('id'),
                 'is_active' => true,
             ]
         );
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             ['email' => 'fnb@hotel.com'],
             [
                 'name'      => 'Admin F&B',
-                'password'  => 'password123',
+                'password'  => '123',
                 'role_id'   => Role::where('slug', 'admin_fnb')->value('id'),
                 'is_active' => true,
             ]
